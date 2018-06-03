@@ -134,7 +134,8 @@ func main() {
 
 	r := mux.NewRouter().StrictSlash(false)
 	fs := http.FileServer(http.Dir("public"))
-	r.Handle("/public/", fs)
+	//if not add http.StripPrefix it will be 404 error
+	r.Handle("/public/", http.StripPrefix("/public/",fs))
 	r.HandleFunc("/", getNotes)
 	r.HandleFunc("/notes/add", addNote)
 	r.HandleFunc("/notes/save", saveNote)
